@@ -1,0 +1,48 @@
+version: '2'
+services:
+    node1:
+        image: mysql/mysql-gr
+        restart: always
+        ports:
+            - 6606:6606
+        command:
+            - group_replication_group_seeds='node2:6606,node3:6606'
+            - server-id=1
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            MYSQL_ROOT_PASSWORD: aTestPwd
+            MYSQL_REPLICATION_USER: rpl_user
+            MYSQL_REPLICATION_PASSWORD: rpl_pass
+
+
+    node2:
+        image: mysql/mysql-gr
+        restart: always
+        ports:
+            - 6607:6606
+        command:
+            - group_replication_group_seeds='node1:6606,node3:6606'
+            - server-id=2
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            MYSQL_ROOT_PASSWORD: aTestPwd
+            MYSQL_REPLICATION_USER: rpl_user
+            MYSQL_REPLICATION_PASSWORD: rpl_pass
+
+
+    node3:
+        image: mysql/mysql-gr
+        restart: always
+        ports:
+            - 6608:6606
+        command:
+            - group_replication_group_seeds='node1:6606,node2:6606'
+            - server-id=1
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            MYSQL_ROOT_PASSWORD: aTestPwd
+            MYSQL_REPLICATION_USER: rpl_user
+            MYSQL_REPLICATION_PASSWORD: rpl_pass

@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+    db:
+      image: mysql
+      environment:
+                - MYSQL_DATABASE=osmeteor
+                - MYSQL_USER=osmeteor
+                - MYSQL_PASSWORD=osmeteorp@ssw0rd
+                - MYSQL_ROOT_PASSWORD=root
+      volumes:
+            - ./db:/var/lib/mysql
+      ports:
+            - "3306:3306"
+    phpmyadmin:
+     image: phpmyadmin/phpmyadmin
+     environment:
+            PMA_ARBITRARY: 1
+            MYSQL_USER: osmeteor
+            MYSQL_PASSWORD: osmeteorp@ssw0rd
+            MYSQL_ROOT_PASSWORD: root
+     ports:
+            - "8080:80"
+     links:
+            # for mysql container
+            - "db:db"
+volumes:
+    db:
+        driver: "local"
