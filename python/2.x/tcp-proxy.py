@@ -7,12 +7,12 @@ import socket
 import select
 import time
 import sys
-
+forward_to = ('localhost', 8187)
+server_port=8188
 # Changing the buffer_size and delay, you can improve the speed and bandwidth.
 # But when buffer get to high or delay go too down, you can broke things
 buffer_size = 4096
 delay = 0.0001
-forward_to = ('localhost', 8187)
 
 class Forward:
     def __init__(self):
@@ -89,7 +89,7 @@ class TheServer:
         self.channel[self.s].send(data)
 
 if __name__ == '__main__':
-        server = TheServer('', 8188)
+        server = TheServer('', server_port)
         try:
             server.main_loop()
         except KeyboardInterrupt:
