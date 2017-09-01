@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# https://www.percona.com/doc/percona-xtrabackup/2.4/installation.html
 #日期转为天数
 function date2days {
     echo "$*" | awk '{
